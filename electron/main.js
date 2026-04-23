@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, dialog } = require('electron')
 const path = require('path')
 
 const APP_ID = 'com.shiftstrong.desktop'
@@ -13,17 +13,40 @@ function createWindow() {
     minWidth: 1200,
     minHeight: 760,
     backgroundColor: '#05070a',
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     show: false,
     icon: path.join(__dirname, '../build/icon.ico'),
     webPreferences: {
       contextIsolation: true,
-      nodeIntegration: false
-    }
+      nodeIntegration: false,
+    },
+  })
+
+  win.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL) => {
+    console.error('did-fail-load:', { errorCode, errorDescription, validatedURL })
+
+    dialog.showErrorBox(
+      'Renderer failed to load',
+      `Code: ${errorCode}\n${errorDescription}\nURL: ${validatedURL}`
+    )
+  })
+
+  win.webContents.on('render-process-gone', (_event, details) => {
+    console.error('render-process-gone:', details)
+
+    dialog.showErrorBox(
+      'Renderer crashed',
+      JSON.stringify(details, null, 2)
+    )
+  })
+
+  win.webContents.on('console-message', (_event, level, message, line, sourceId) => {
+    console.log(`Renderer console [${level}]: ${message} (${sourceId}:${line})`)
   })
 
   win.once('ready-to-show', () => {
     win.show()
+    win.webContents.openDevTools()
   })
 
   if (isDev) {
