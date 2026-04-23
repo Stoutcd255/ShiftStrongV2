@@ -137,3 +137,24 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Electron build outputs
+dist-electron/
+release/
+out/
+build/
+*.asar
+
+# React build outputs (if applicable)
+build/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE folders
+.vscode/
+.idea/
+
+# Misc
+*.log
