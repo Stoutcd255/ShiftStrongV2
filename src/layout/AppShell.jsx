@@ -18,6 +18,16 @@ export default function AppShell({
   onDataChanged,
   onProfileUpdated,
 }) {
+  const navItems = [
+    { key: 'dashboard', label: 'Dashboard', icon: '▦' },
+    { key: 'workouts', label: 'Workouts', icon: '⌁' },
+    { key: 'macros', label: 'Macros', icon: '⌂' },
+    { key: 'bodyweight', label: 'Bodyweight', icon: '◉' },
+    { key: 'goals', label: 'Goals', icon: '⌗' },
+    { key: 'history', label: 'History', icon: '◫' },
+    { key: 'settings', label: 'Settings', icon: '⚙' },
+  ]
+
   function renderPage() {
     if (displayPage === 'workouts') {
       return <Workouts currentUser={currentUser} onDataChanged={onDataChanged} />
@@ -101,40 +111,16 @@ export default function AppShell({
 
         <div className="ss-main-layout">
           <aside className="ss-sidebar">
-            <button className={`ss-nav-item ${currentPage === 'dashboard' ? 'active' : ''}`} onClick={() => onNavigate('dashboard')}>
-              <span className="ss-nav-icon">▦</span>
-              <span>Dashboard</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'workouts' ? 'active' : ''}`} onClick={() => onNavigate('workouts')}>
-              <span className="ss-nav-icon">⌁</span>
-              <span>Workouts</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'macros' ? 'active' : ''}`} onClick={() => onNavigate('macros')}>
-              <span className="ss-nav-icon">⌂</span>
-              <span>Macros</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'bodyweight' ? 'active' : ''}`} onClick={() => onNavigate('bodyweight')}>
-              <span className="ss-nav-icon">◉</span>
-              <span>Bodyweight</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'goals' ? 'active' : ''}`} onClick={() => onNavigate('goals')}>
-              <span className="ss-nav-icon">⌗</span>
-              <span>Goals</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'history' ? 'active' : ''}`} onClick={() => onNavigate('history')}>
-              <span className="ss-nav-icon">◫</span>
-              <span>History</span>
-            </button>
-
-            <button className={`ss-nav-item ${currentPage === 'settings' ? 'active' : ''}`} onClick={() => onNavigate('settings')}>
-              <span className="ss-nav-icon">⚙</span>
-              <span>Settings</span>
-            </button>
+            {navItems.map((item) => (
+              <button
+                key={item.key}
+                className={`ss-nav-item ${currentPage === item.key ? 'active' : ''}`}
+                onClick={() => onNavigate(item.key)}
+              >
+                <span className="ss-nav-icon">{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
 
             <div className="ss-sidebar-footer">
               <div className="ss-sidebar-badge">STAY READY</div>
@@ -148,6 +134,19 @@ export default function AppShell({
             {renderPage()}
           </main>
         </div>
+
+        <nav className="ss-mobile-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              className={`ss-mobile-nav-item ${currentPage === item.key ? 'active' : ''}`}
+              onClick={() => onNavigate(item.key)}
+            >
+              <span className="ss-mobile-nav-icon">{item.icon}</span>
+              <span className="ss-mobile-nav-label">{item.label}</span>
+            </button>
+          ))}
+        </nav>
       </div>
     </div>
   )

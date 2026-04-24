@@ -159,6 +159,10 @@
   align-items: start;
 }
 
+.ss-mobile-nav {
+  display: none;
+}
+
 .ss-sidebar {
   position: sticky;
   top: 16px;
@@ -1333,12 +1337,77 @@
 }
 
 @media (max-width: 980px) {
+  .ss-app {
+    padding: 10px;
+  }
+
+  .ss-shell {
+    min-height: calc(100vh - 20px);
+    border-radius: 20px;
+  }
+
+  .ss-topbar {
+    height: auto;
+    min-height: 82px;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .ss-brand {
+    gap: 10px;
+  }
+
+  .ss-logo-wrap {
+    height: 46px;
+    border-radius: 12px;
+  }
+
+  .ss-brand-title {
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .ss-topbar-right {
+    gap: 8px;
+  }
+
+  .ss-user-block {
+    display: none;
+  }
+
+  .ss-icon-button,
+  .ss-logout-button {
+    height: 40px;
+  }
+
+  .ss-icon-button {
+    width: 40px;
+    border-radius: 12px;
+  }
+
+  .ss-logout-button {
+    border-radius: 12px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .ss-user-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
   .ss-main-layout {
     grid-template-columns: 1fr;
   }
 
   .ss-sidebar {
     display: none;
+  }
+
+  .ss-content-panel {
+    padding: 16px;
+    padding-bottom: calc(106px + env(safe-area-inset-bottom));
   }
 
   .ss-hero,
@@ -1368,6 +1437,65 @@
 
   .ss-auth-panel {
     border-left: none;
+  }
+
+  .ss-mobile-nav {
+    display: grid;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    background: linear-gradient(
+      180deg,
+      rgba(6, 10, 16, 0.75),
+      rgba(6, 10, 16, 0.95)
+    );
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+  }
+
+  .ss-mobile-nav-item {
+    min-height: 60px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(10, 14, 20, 0.82);
+    color: #b7c1cb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px;
+    cursor: pointer;
+  }
+
+  .ss-mobile-nav-item.active {
+    color: #f4f7fb;
+    border-color: rgba(61, 122, 255, 0.35);
+    background: linear-gradient(
+      180deg,
+      rgba(36, 82, 190, 0.32),
+      rgba(17, 46, 114, 0.22)
+    );
+    box-shadow:
+      inset 0 0 0 1px rgba(61, 122, 255, 0.12),
+      0 0 14px rgba(47, 109, 246, 0.2);
+  }
+
+  .ss-mobile-nav-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .ss-mobile-nav-label {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 }
 
