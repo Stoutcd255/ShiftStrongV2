@@ -119,7 +119,7 @@ export default function Settings({ currentUser, onDataChanged, onProfileUpdated 
     try {
       const text = await file.text()
       importAllShiftStrongData(text)
-      setDataMessage('Backup imported. Restart app session if needed.')
+      setDataMessage('Backup imported. Please sign in again to refresh your session.')
       onDataChanged()
     } catch (err) {
       setDataMessage(err.message || 'Import failed.')

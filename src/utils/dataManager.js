@@ -1,4 +1,4 @@
-import { getUsers, saveUsers } from './auth'
+import { getUsers, logoutUser, saveUsers } from './auth'
 import { getUserGoals } from './goals'
 
 const WORKOUTS_KEY = 'shiftstrong_workouts'
@@ -9,7 +9,14 @@ const TEMPLATES_KEY = 'shiftstrong_templates'
 
 function readJson(key, fallback = []) {
   const raw = localStorage.getItem(key)
-  return raw ? JSON.parse(raw) : fallback
+  if (!raw) return fallback
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : fallback
+  } catch {
+    return fallback
+  }
 }
 
 function writeJson(key, value) {
@@ -49,7 +56,13 @@ export function downloadExportFile() {
 }
 
 export function importAllShiftStrongData(fileText) {
-  const parsed = JSON.parse(fileText)
+  let parsed = null
+
+  try {
+    parsed = JSON.parse(fileText)
+  } catch {
+    throw new Error('Invalid JSON backup file.')
+  }
 
   if (!parsed || parsed.app !== 'ShiftStrong') {
     throw new Error('Invalid ShiftStrong backup file.')
@@ -61,6 +74,7 @@ export function importAllShiftStrongData(fileText) {
   writeJson(GOALS_KEY, Array.isArray(parsed.goals) ? parsed.goals : [])
   writeJson(BODYWEIGHT_KEY, Array.isArray(parsed.bodyweight) ? parsed.bodyweight : [])
   writeJson(TEMPLATES_KEY, Array.isArray(parsed.templates) ? parsed.templates : [])
+  logoutUser()
 }
 
 export function resetAllShiftStrongData() {

@@ -11,7 +11,14 @@ export const RANK_OPTIONS = [
 
 export function getUsers() {
   const raw = localStorage.getItem(USERS_KEY)
-  return raw ? JSON.parse(raw) : []
+  if (!raw) return []
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 export function saveUsers(users) {
@@ -79,7 +86,14 @@ export function loginUser({ username, password }) {
 
 export function getSession() {
   const raw = localStorage.getItem(SESSION_KEY)
-  return raw ? JSON.parse(raw) : null
+  if (!raw) return null
+
+  try {
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed : null
+  } catch {
+    return null
+  }
 }
 
 export function logoutUser() {

@@ -2,7 +2,14 @@ const MACROS_KEY = 'shiftstrong_macros'
 
 function getAllMacros() {
   const raw = localStorage.getItem(MACROS_KEY)
-  return raw ? JSON.parse(raw) : []
+  if (!raw) return []
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 function saveAllMacros(entries) {

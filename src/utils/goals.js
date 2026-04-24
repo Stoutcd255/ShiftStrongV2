@@ -2,7 +2,14 @@ const GOALS_KEY = 'shiftstrong_goals'
 
 function getAllGoals() {
   const raw = localStorage.getItem(GOALS_KEY)
-  return raw ? JSON.parse(raw) : []
+  if (!raw) return []
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 function saveAllGoals(goals) {

@@ -2,7 +2,14 @@ const BODYWEIGHT_KEY = 'shiftstrong_bodyweight'
 
 function getAllBodyweightEntries() {
   const raw = localStorage.getItem(BODYWEIGHT_KEY)
-  return raw ? JSON.parse(raw) : []
+  if (!raw) return []
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 function saveAllBodyweightEntries(entries) {

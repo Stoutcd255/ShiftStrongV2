@@ -2,7 +2,14 @@ const TEMPLATES_KEY = 'shiftstrong_templates'
 
 function getAllTemplates() {
   const raw = localStorage.getItem(TEMPLATES_KEY)
-  return raw ? JSON.parse(raw) : []
+  if (!raw) return []
+
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
 }
 
 function saveAllTemplates(templates) {
