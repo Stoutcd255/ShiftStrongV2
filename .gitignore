@@ -142,7 +142,7 @@ vite.config.ts.timestamp-*
 dist-electron/
 release/
 out/
-build/
+
 *.asar
 
 # React build outputs (if applicable)
